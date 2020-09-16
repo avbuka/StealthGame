@@ -11,6 +11,7 @@ AFPSGameMode::AFPSGameMode()
 
 	// use our custom HUD class
 	HUDClass = AFPSHUD::StaticClass();
+
 	GameStateClass= AFPSGameState::StaticClass();
 }
 
@@ -20,17 +21,18 @@ void AFPSGameMode::CompleteMission(APawn* InitiatorPawn, bool bIsMissionSuccess)
 	{
 		
 		FinishingScreen(InitiatorPawn, bIsMissionSuccess);
-
-
-
-		OnMissionCompleted(InitiatorPawn, bIsMissionSuccess);
-
+		
 		AFPSGameState* GS = GetGameState<AFPSGameState>();
 
 		if (GS)
 		{
-			GS->MulicastOnMissionComplete(InitiatorPawn,bIsMissionSuccess);
+			GS->MulicastOnMissionComplete(InitiatorPawn, bIsMissionSuccess);
 		}
+
+
+		OnMissionCompleted(InitiatorPawn, bIsMissionSuccess);
+
+		
 	}
 }
 
