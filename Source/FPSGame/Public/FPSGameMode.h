@@ -32,11 +32,14 @@ public:
 
 
 	AFPSGameMode();
+
+	UFUNCTION(BlueprintCallable)
 	void CompleteMission(APawn* InitianorPawn, bool bIsMissionSuccess);
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "GameMode")
 	void OnMissionCompleted(APawn* InitianorPawn, bool bIsMissionSuccess);
 
+	UFUNCTION (BlueprintCallable)
 	void FinishingScreen(APawn* InitiatorPawn, bool bIsMissionSuccess);
 
 

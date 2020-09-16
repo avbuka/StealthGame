@@ -34,7 +34,7 @@ void AFPSGameMode::FinishingScreen(APawn* InitiatorPawn, bool bIsMissionSuccess)
 	{
 		APlayerController* PlayerController = Cast<APlayerController>(InitiatorPawn->GetController());
 
-		bIsGameWon = bIsMissionSuccess;
+		//bIsGameWon = bIsMissionSuccess;
 		//	AActor* NewViewport;
 		TArray<AActor*> ReturnedActors;
 
