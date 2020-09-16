@@ -13,6 +13,7 @@
 #include "Engine/TargetPoint.h"
 #include "AIController.h"
 #include "NavigationSystem.h"
+#include "Net/UnrealNetwork.h"
 
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 
@@ -62,10 +63,14 @@ protected:
 	void OnStateChanged(EAIState NewState);
 
 
+	UFUNCTION()
+	void OnRep_GuardState();
+
 	void SetGuardState(EAIState NewState);
 
 	void MoveToNextPatrolPoint();
 
+	UPROPERTY(ReplicatedUsing=OnRep_GuardState)
 	EAIState GuardState;
 
 
