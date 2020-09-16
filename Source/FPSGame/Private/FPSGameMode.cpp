@@ -1,6 +1,7 @@
 // Copyright 1998-2017 Epic Games, Inc. All Rights Reserved.
 
 #include "FPSGameMode.h"
+#include <FPSGame\Public\FPSGameState.h>
 
 AFPSGameMode::AFPSGameMode()
 {
@@ -10,20 +11,28 @@ AFPSGameMode::AFPSGameMode()
 
 	// use our custom HUD class
 	HUDClass = AFPSHUD::StaticClass();
+
+	GameStateClass= AFPSGameState::StaticClass();
 }
 
-void AFPSGameMode::CompleteMission(APawn* InitianorPawn, bool bIsMissionSuccess)
+void AFPSGameMode::CompleteMission(APawn* InitiatorPawn, bool bIsMissionSuccess)
 {
-	if (InitianorPawn)
+	if (InitiatorPawn)
 	{
-		InitianorPawn->DisableInput(nullptr);
+		
+		FinishingScreen(InitiatorPawn, bIsMissionSuccess);
+		
+		AFPSGameState* GS = GetGameState<AFPSGameState>();
+
+		if (GS)
+		{
+			GS->MulicastOnMissionComplete(InitiatorPawn, bIsMissionSuccess);
+		}
 
 
-		FinishingScreen(InitianorPawn, bIsMissionSuccess);
+		OnMissionCompleted(InitiatorPawn, bIsMissionSuccess);
 
-
-
-		OnMissionCompleted(InitianorPawn, bIsMissionSuccess);
+		
 	}
 }
 
@@ -44,8 +53,19 @@ void AFPSGameMode::FinishingScreen(APawn* InitiatorPawn, bool bIsMissionSuccess)
 		{
 			if (ReturnedActors.Num() > 0)
 			{
-				PlayerController->SetViewTargetWithBlend(ReturnedActors[0], 2.5,
-					EViewTargetBlendFunction::VTBlend_Cubic);
+
+				for (FConstPlayerControllerIterator It = GetWorld()->GetPlayerControllerIterator(); It; It++)
+				{
+					APlayerController* PC=It->Get();
+
+					if (PC)
+					{
+						PC->SetViewTargetWithBlend(ReturnedActors[0], 2.5,
+							EViewTargetBlendFunction::VTBlend_Cubic);
+
+					}
+				}
+				
 			}
 
 

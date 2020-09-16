@@ -34,7 +34,8 @@ void AFPSExtractionZone::BeginPlay()
 
 }
 
-void AFPSExtractionZone::HandleOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+void AFPSExtractionZone::HandleOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, 
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 
 	AFPSCharacter* Character = Cast<AFPSCharacter>(OtherActor);
@@ -46,7 +47,12 @@ void AFPSExtractionZone::HandleOverlap(UPrimitiveComponent* OverlappedComponent,
 			UE_LOG(LogTemp, Warning, TEXT("You win"));
 
 			AFPSGameMode* GM=Cast<AFPSGameMode>(GetWorld()->GetAuthGameMode());
-			GM->CompleteMission(Character,true);
+			
+			if (GM)
+			{
+				GM->CompleteMission(Character, true);
+
+			}
 		}
 		else
 		{
