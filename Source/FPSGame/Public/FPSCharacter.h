@@ -10,6 +10,8 @@
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "Net/UnrealNetwork.h"
+
 
 #include "FPSCharacter.generated.h"
 
@@ -58,7 +60,7 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = "Gameplay")
 	UAnimSequence* FireAnimation;
 
-	UPROPERTY(BlueprintReadOnly, Category = "Gameplay")
+	UPROPERTY(Replicated,BlueprintReadOnly, Category = "Gameplay")
 	bool bIsCarryingObjective=false;
 
 
