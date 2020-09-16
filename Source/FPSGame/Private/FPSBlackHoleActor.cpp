@@ -60,19 +60,17 @@ void AFPSBlackHoleActor::Tick(float DeltaTime)
 
 	BigSphereComp->GetOverlappingComponents(OverlappingComps);
 	
-	UE_LOG(LogTemp, Warning, TEXT("%d"), OverlappingComps.Num());
 
 	
 	for (int32 i = 0; i < OverlappingComps.Num(); i++)
 	{
-		//UE_LOG(LogTemp, Warning, TEXT("%s"), OverlappingComps[i]->GetFullName());
-
+	
 		if (OverlappingComps[i]->IsSimulatingPhysics())
 		{
 			FString ErrorLine = "Component simulates physics - %s";
 			 ErrorLine.Append(OverlappingComps[i]->GetFullName());
 
-			//UE_LOG(LogTemp, Warning, TEXT("%s"),*ErrorLine);
+			
 			OverlappingComps[i]->AddRadialForce(GetActorLocation(), 
 				BigSphereComp->GetScaledSphereRadius(), Strengh,
 				ERadialImpulseFalloff::RIF_Constant,true);
