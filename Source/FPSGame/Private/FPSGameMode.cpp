@@ -53,8 +53,19 @@ void AFPSGameMode::FinishingScreen(APawn* InitiatorPawn, bool bIsMissionSuccess)
 		{
 			if (ReturnedActors.Num() > 0)
 			{
-				PlayerController->SetViewTargetWithBlend(ReturnedActors[0], 2.5,
-					EViewTargetBlendFunction::VTBlend_Cubic);
+
+				for (FConstPlayerControllerIterator It = GetWorld()->GetPlayerControllerIterator(); It; It++)
+				{
+					APlayerController* PC=It->Get();
+
+					if (PC)
+					{
+						PC->SetViewTargetWithBlend(ReturnedActors[0], 2.5,
+							EViewTargetBlendFunction::VTBlend_Cubic);
+
+					}
+				}
+				
 			}
 
 
